@@ -5,11 +5,16 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
+// Load environment variables from .env file
+dotenv.config();
+
 // Initialize Express app
 const app = express();
-app.use(cors());
-require('dotenv').config();
 const PORT = process.env.PORT || 4000;
+
+// Enable CORS
+app.use(cors());
+
 
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,

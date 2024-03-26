@@ -16,7 +16,7 @@
   // Fetch a random message from the API
   async function fetchRandomMessage() {
     try {
-      const response = await axios.get("http://localhost:4000/random");
+      const response = await axios.get("https://wave-4yvm.onrender.com/random");
       if (response.data && response.data.message) {
         randomMessage = response.data.message;
       }
@@ -33,7 +33,7 @@
 
     try {
       const response = await axios.post(
-        `http://localhost:4000/send-message/${recipientSlug}`,
+        `https://wave-4yvm.onrender.com/send-message/${recipientSlug}`,
         {
           text: messageContent,
         }

@@ -11,7 +11,7 @@
   async function fetchMessages() {
     try {
       const token = Cookies.get("token");
-      const response = await axios.get("http://localhost:4000/messages", {
+      const response = await axios.get("https://wave-4yvm.onrender.com/messages", {
         headers: {
           authorization: `${token}`,
         },
@@ -30,7 +30,7 @@
   async function fetchProfile() {
     try {
       const token = Cookies.get("token");
-      const response = await axios.get("http://localhost:4000/profile", {
+      const response = await axios.get("https://wave-4yvm.onrender.com/profile", {
         headers: {
           authorization: `${token}`,
         },

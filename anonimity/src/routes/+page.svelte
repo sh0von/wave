@@ -3,7 +3,7 @@
     import axios from 'axios';
     import Cookies from 'js-cookie';
 
-    const apiURL = 'http://localhost:4000';
+    const apiURL = 'https://wave-4yvm.onrender.com';
     let name = '';
     let ifRegistered = false;
 

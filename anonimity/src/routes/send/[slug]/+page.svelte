@@ -122,12 +122,12 @@
   </div>
 </main>
 <svelte:head>
-  <title>Send Message to {recipientSlug}</title>
-  <meta property="og:title" content="Send Message to {recipientSlug}" />
+  <title>Send Message Anonymously</title>
+  <meta property="og:title" content="Send Message Anonymously" />
 
   <meta
     property="og:image"
-    content={`https://api.multiavatar.com/${recipientSlug}.png`}
+    content="https://api.multiavatar.com/aj.png"
   />
   <meta property="og:description" content="Send Anonymous message through WAVE" />
 </svelte:head>

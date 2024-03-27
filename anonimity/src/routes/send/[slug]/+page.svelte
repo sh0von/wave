@@ -65,7 +65,7 @@
 <svelte:head>
   <title>Send Message to {recipientSlug}</title>
   <meta property="og:title" content="Send Message to {recipientSlug}" />
-  <meta property="og:image" content={`https://api.multiavatar.com/${recipientSlug}.png`} />
+  <meta property="og:image" content={`https://api.multiavatar.com/${recipientSlug}.png`} width="100px" height="100px"/>
   <meta property="og:description" content="Send an anonymous message to {recipientSlug} via WAVE" />
 </svelte:head>
 

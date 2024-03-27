@@ -1,17 +1,11 @@
 <script>
   import { onMount } from "svelte";
   import axios from "axios";
-  import { page } from "$app/stores";
 
   let alertMessage = "";
   let recipientSlug = "";
   let randomMessage = "";
 
-  // Extract recipient slug from the URL
-  onMount(() => {
-    const parts = window.location.pathname.split("/");
-    recipientSlug = parts[parts.length - 1]; // Get the last part of the URL
-  });
 
   // Fetch a random message from the API
   async function fetchRandomMessage() {
@@ -60,7 +54,21 @@
       alertMessage = "";
     }, 3000);
   }
+  // Extract recipient slug from the URL
+  onMount(() => {
+    const parts = window.location.pathname.split('/');
+    recipientSlug = parts[parts.length - 1]; // Get the last part of the URL
+  });
+
 </script>
+
+<svelte:head>
+  <title>Send Message to {recipientSlug}</title>
+  <meta property="og:title" content="Send Message to {recipientSlug}" />
+  <meta property="og:image" content={`https://api.multiavatar.com/${recipientSlug}.png`} />
+  <meta property="og:description" content="Send an anonymous message to {recipientSlug} via WAVE" />
+</svelte:head>
+
 
 <main class="container mx-auto py-8 px-4 md:px-0" style="min-height: 90vh;">
   <div class="max-w-lg mx-auto">
@@ -121,13 +129,4 @@
     {/if}
   </div>
 </main>
-<svelte:head>
-  <title>Send Message Anonymously</title>
-  <meta property="og:title" content="Send Message Anonymously" />
 
-  <meta
-    property="og:image"
-    content="https://api.multiavatar.com/aj.png"
-  />
-  <meta property="og:description" content="Send Anonymous message through WAVE" />
-</svelte:head>

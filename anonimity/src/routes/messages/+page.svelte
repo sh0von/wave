@@ -105,7 +105,7 @@
           id="message-link"
           type="text"
           class="form-input mt-1 block w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500"
-          value={`http://localhost:5173/send/${username}`}
+          value={`https://wave-xi-inky.vercel.app/send/${username}`}
           readonly
         />
         <button

@@ -1,72 +1,75 @@
 <script>
-  import { onMount } from "svelte";
-  import axios from "axios";
+import { onMount } from "svelte";
+import axios from "axios";
+import { writable } from 'svelte/store';
 
-  let alertMessage = "";
-  let recipientSlug = "";
-  let randomMessage = "";
+let alertMessage = "";
+let randomMessage = "";
 
+// Create a writable store for recipientSlug
+let recipientSlug = writable("");
 
-  // Fetch a random message from the API
-  async function fetchRandomMessage() {
-    try {
-      const response = await axios.get("https://wave-4yvm.onrender.com/random");
-      if (response.data && response.data.message) {
-        randomMessage = response.data.message;
-      }
-    } catch (error) {
-      console.error("Error fetching random message:", error);
+// Fetch a random message from the API
+async function fetchRandomMessage() {
+  try {
+    const response = await axios.get("https://wave-4yvm.onrender.com/random");
+    if (response.data && response.data.message) {
+      randomMessage = response.data.message;
     }
+  } catch (error) {
+    console.error("Error fetching random message:", error);
   }
+}
 
-  // Handle form submission
-  async function handleFormSubmission(event) {
-    event.preventDefault();
+// Handle form submission
+async function handleFormSubmission(event) {
+  event.preventDefault();
 
-    const messageContent = event.target.messageContent.value;
+  const messageContent = event.target.messageContent.value;
 
-    try {
-      const response = await axios.post(
-        `https://wave-4yvm.onrender.com/send-message/${recipientSlug}`,
-        {
-          text: messageContent,
-        }
-      );
-
-      if (
-        response.data &&
-        response.data.message === "Message sent successfully"
-      ) {
-        alertMessage = "Message sent successfully!";
-      } else {
-        alertMessage = "Failed to send message. Please try again later.";
+  try {
+    const response = await axios.post(
+      `https://wave-4yvm.onrender.com/send-message/${$recipientSlug}`,
+      {
+        text: messageContent,
       }
-    } catch (error) {
-      console.error("Error sending message:", error);
+    );
+
+    if (
+      response.data &&
+      response.data.message === "Message sent successfully"
+    ) {
+      alertMessage = "Message sent successfully!";
+    } else {
       alertMessage = "Failed to send message. Please try again later.";
     }
-
-    // Clear the message content after sending
-    event.target.reset();
-
-    // Hide the alert after 3 seconds
-    setTimeout(() => {
-      alertMessage = "";
-    }, 3000);
+  } catch (error) {
+    console.error("Error sending message:", error);
+    alertMessage = "Failed to send message. Please try again later.";
   }
-  // Extract recipient slug from the URL
-  onMount(() => {
-    const parts = window.location.pathname.split('/');
-    recipientSlug = parts[parts.length - 1]; // Get the last part of the URL
-  });
+
+  // Clear the message content after sending
+  event.target.reset();
+
+  // Hide the alert after 3 seconds
+  setTimeout(() => {
+    alertMessage = "";
+  }, 3000);
+}
+
+// Extract recipient slug from the URL
+onMount(() => {
+  const parts = window.location.pathname.split("/");
+  recipientSlug.set(parts[parts.length - 1]); // Set the value of recipientSlug
+});
 
 </script>
 
 <svelte:head>
-  <title>Send Message to {recipientSlug}</title>
-  <meta property="og:title" content="Send Message to {recipientSlug}" />
-  <meta property="og:image" content={`https://api.multiavatar.com/${recipientSlug}.png`} width="100px" height="100px"/>
-  <meta property="og:description" content="Send an anonymous message to {recipientSlug} via WAVE" />
+  <title>Send Message to {$recipientSlug}</title>
+  <meta property="og:title" content="Send Message to {$recipientSlug}" />
+  <meta property="og:image" content={`https://api.multiavatar.com/${$recipientSlug}.png`} width="100px" height="100px"/>
+  <meta property="og:description" content="Send an anonymous message to {$recipientSlug} via WAVE" />
 </svelte:head>
 
 
@@ -76,7 +79,7 @@
     <form id="messageForm" class="mb-8" on:submit={handleFormSubmission}>
       <div class="mb-6">
         <p class="block text-lg text-gray-700 mb-2">
-          Recipient: @{recipientSlug}
+          Recipient: @{$recipientSlug}
         </p>
       </div>
       <div class="mb-6">

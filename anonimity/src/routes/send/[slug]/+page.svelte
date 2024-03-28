@@ -1,75 +1,78 @@
 <script>
-import { onMount } from "svelte";
-import axios from "axios";
-import { writable } from 'svelte/store';
+  import { onMount } from "svelte";
+  import axios from "axios";
+  import { writable } from 'svelte/store';
 
-let alertMessage = "";
-let randomMessage = "";
+  // Create a writable store to hold the recipient slug
+  const recipientSlugStore = writable('');
 
-// Create a writable store for recipientSlug
-let recipientSlug = writable("");
+  let alertMessage = "";
+  let randomMessage = "";
 
-// Fetch a random message from the API
-async function fetchRandomMessage() {
-  try {
-    const response = await axios.get("https://wave-4yvm.onrender.com/random");
-    if (response.data && response.data.message) {
-      randomMessage = response.data.message;
-    }
-  } catch (error) {
-    console.error("Error fetching random message:", error);
-  }
-}
-
-// Handle form submission
-async function handleFormSubmission(event) {
-  event.preventDefault();
-
-  const messageContent = event.target.messageContent.value;
-
-  try {
-    const response = await axios.post(
-      `https://wave-4yvm.onrender.com/send-message/${$recipientSlug}`,
-      {
-        text: messageContent,
+  // Fetch a random message from the API
+  async function fetchRandomMessage() {
+    try {
+      const response = await axios.get("https://wave-4yvm.onrender.com/random");
+      if (response.data && response.data.message) {
+        randomMessage = response.data.message;
       }
-    );
+    } catch (error) {
+      console.error("Error fetching random message:", error);
+    }
+  }
 
-    if (
-      response.data &&
-      response.data.message === "Message sent successfully"
-    ) {
-      alertMessage = "Message sent successfully!";
-    } else {
+  // Handle form submission
+  async function handleFormSubmission(event) {
+    event.preventDefault();
+
+    const messageContent = event.target.messageContent.value;
+
+    try {
+      const response = await axios.post(
+        `https://wave-4yvm.onrender.com/send-message/${$recipientSlugStore}`,
+        {
+          text: messageContent,
+        }
+      );
+
+      if (
+        response.data &&
+        response.data.message === "Message sent successfully"
+      ) {
+        alertMessage = "Message sent successfully!";
+      } else {
+        alertMessage = "Failed to send message. Please try again later.";
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
       alertMessage = "Failed to send message. Please try again later.";
     }
-  } catch (error) {
-    console.error("Error sending message:", error);
-    alertMessage = "Failed to send message. Please try again later.";
+
+    // Clear the message content after sending
+    event.target.reset();
+
+    // Hide the alert after 3 seconds
+    setTimeout(() => {
+      alertMessage = "";
+    }, 3000);
   }
 
-  // Clear the message content after sending
-  event.target.reset();
+  // Extract recipient slug from the URL and update the store
+  onMount(() => {
+    const parts = window.location.pathname.split('/');
+    recipientSlugStore.set(parts[parts.length - 1]); // Get the last part of the URL and update the store
+  });
 
-  // Hide the alert after 3 seconds
-  setTimeout(() => {
-    alertMessage = "";
-  }, 3000);
-}
-
-// Extract recipient slug from the URL
-onMount(() => {
-  const parts = window.location.pathname.split("/");
-  recipientSlug.set(parts[parts.length - 1]); // Set the value of recipientSlug
-});
+  // Subscribe to changes in the recipientSlugStore
+  $: recipientSlug = $recipientSlugStore;
 
 </script>
 
 <svelte:head>
-  <title>Send Message to {$recipientSlug}</title>
-  <meta property="og:title" content="Send Message to {$recipientSlug}" />
-  <meta property="og:image" content={`https://api.multiavatar.com/${$recipientSlug}.png`} width="100px" height="100px"/>
-  <meta property="og:description" content="Send an anonymous message to {$recipientSlug} via WAVE" />
+  <title>Send Message Anonymously</title>
+  <meta property="og:title" content="Send Message to your friend .." />
+  <meta property="og:image" content={`https://api.multiavatar.com/hellosir.png`} width="100px" height="100px"/>
+  <meta property="og:description" content="Send an anonymous message to your friend via WAVE" />
 </svelte:head>
 
 
@@ -79,7 +82,7 @@ onMount(() => {
     <form id="messageForm" class="mb-8" on:submit={handleFormSubmission}>
       <div class="mb-6">
         <p class="block text-lg text-gray-700 mb-2">
-          Recipient: @{$recipientSlug}
+          Recipient: @{recipientSlug}
         </p>
       </div>
       <div class="mb-6">

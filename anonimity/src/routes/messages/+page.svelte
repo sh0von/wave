@@ -87,7 +87,7 @@
 
 <main class="container mx-auto py-8 px-4">
   <div class="profile-section">
-    <div class="card p-6 rounded-lg shadow-md">
+    <div class="card p-6 ">
       <div class="flex items-center justify-center mb-4">
         <div class="flex-shrink-0 mr-3">
           <img
@@ -98,7 +98,7 @@
         </div>
       </div>
 
-      <div class="text-center">
+      <div class="text-center lg:w-2/3 xl:w-1/2 mx-auto"> <!-- Adjust width for large and extra-large devices -->
         <p class="text-gray-700 mb-4">Username: {username}</p>
         <p class="text-gray-700 mb-4">Share your unique message link:</p>
         <input
@@ -119,7 +119,7 @@
         {/if}
       </div>
     </div>
-  </div>
+</div>
 
 
   <h2 class="text-2xl font-semibold text-gray-800 mb-4 py-8">Recent Messages</h2>

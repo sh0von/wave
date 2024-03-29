@@ -51,6 +51,7 @@
         {#if !ifRegistered}
         <div class="p-6">
             <form on:submit={handleSubmit}>
+                <input type="text" id="name" class="w-full bg-gray-100 border border-gray-200 rounded-lg py-2 px-4 mb-4" placeholder="Enter your name" required />
                 <p class="text-gray-600 mb-4 text-center">No personal information required. Just enter your name to start receiving encrypted anonymous messages.</p>
                 <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Register</button>
             </form>

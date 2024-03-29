@@ -42,19 +42,14 @@
     function handleSubmit(e) {
         registerUser(e);
     }
-</script>
-
-<main id="content" class="container mx-auto py-8 px-4 text-center">
+</script><main id="content" class="container mx-auto py-8 px-4 text-center">
     <h1 class="text-4xl font-bold text-gray-800 mb-6">Anonymous Messaging Made Simple</h1>
     <p class="text-lg text-gray-600 mb-8">Experience the thrill of receiving anonymous messages securely.</p>
-    <div class="my-8  max-w-md mx-auto bg-white rounded-lg overflow-hidden">
+    <div class="my-8 max-w-md mx-auto bg-white rounded-lg overflow-hidden">
         {#if !ifRegistered}
         <div class="p-6">
             <form on:submit={handleSubmit}>
-                <div class="mb-4">
-                    <input type="text" id="name" name="name" class="form-input mt-1 block w-full border-2 border-blue-200 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500" placeholder="Enter your name to get started" required>
-                </div>
-                <p class="text-gray-600 mb-4 text-center">No other information required. Just enter your name to start receiving anonymous messages.</p>
+                <p class="text-gray-600 mb-4 text-center">No personal information required. Just enter your name to start receiving encrypted anonymous messages.</p>
                 <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Register</button>
             </form>
         </div>
@@ -71,7 +66,7 @@
             <div class="p-6">
                 <i class="fas fa-lock fa-4x text-blue-500 mx-auto mb-4"></i>
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">Encrypted Messages</h2>
-                <p class="text-gray-700 mb-4">Send and receive encrypted messages for enhanced security.</p>
+                <p class="text-gray-700 mb-4">Send and receive AES 256 encrypted messages for enhanced security.</p>
                 <a href="#a" class="text-blue-500 hover:text-blue-600 font-semibold">Learn More</a>
             </div>
         </div>
@@ -82,7 +77,7 @@
             <div class="p-6">
                 <i class="fas fa-calendar-times fa-4x text-blue-500 mx-auto mb-4"></i>
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">Message Expiry</h2>
-                <p class="text-gray-700 mb-4">Store messages for up to 30 days before they are automatically deleted.</p>
+                <p class="text-gray-700 mb-4">Messages are stored for up to 30 days before they are automatically deleted.</p>
                 <a href="#b" class="text-blue-500 hover:text-blue-600 font-semibold">Learn More</a>
             </div>
         </div>
@@ -105,3 +100,12 @@
         <a href="#name" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">Sign Up Now</a>
     </div>
 </main>
+<svelte:head>
+    <title>
+        Wave-No login anonymous messaging
+    </title>
+    <meta property="og:title" content="Wave-No login anonymous messaging" />
+    <meta property="og:image" content="https://api.multiavatar.com/hellosir.png" width="100px" height="100px"/>
+    <meta property="og:description" content="Send and receive anonymous messages securely without the need to register." />
+    <meta description="Send and receive anonymous messages securely without the need to register." />
+    </svelte:head>

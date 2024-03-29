@@ -35,7 +35,7 @@
       </div>
       {#if ifRegistered}
       <div class="px-8">
-        <button class="px-4 py-2 button-primary rounded-xl" on:click={logout}>LClear Message</button>
+        <button class="px-4 py-2 button-primary rounded-xl" on:click={logout}>Clear Message</button>
       </div>
       {/if}
     </div>
